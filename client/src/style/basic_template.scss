@@ -1,0 +1,26 @@
+@import "global_variables";
+
+html, body
+{
+  min-height: 100vh;
+}
+
+body, #root
+{
+  height: 100vh;
+  display: flex;
+  flex-flow: column nowrap;
+  flex-grow: 1;
+}
+
+header
+{
+  height: 75px;
+  background-color: $main-gray-color;
+}
+
+footer
+{
+  height: 25px;
+  background: $main-gray-color;
+}

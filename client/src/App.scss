@@ -1,3 +1,8 @@
 @import "style/global_variables";
 @import "style/basic_template.scss";
 @import "style/basic_class.scss";
+
+#main-body
+{
+  background-color: $main-black-color;
+}

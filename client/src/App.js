@@ -4,9 +4,11 @@ import './App.scss';
 class App extends Component {
   render() {
     return (
-      <div>
+      <div class="column container">
         <header>
         </header>
+        <div id="main-body" class="column container">
+        </div>
         <footer>
         </footer>
       </div>
