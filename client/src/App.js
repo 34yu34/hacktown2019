@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Map_Component } from './components/map_component.js'
 import './App.scss';
 
 class App extends Component {
@@ -8,6 +9,7 @@ class App extends Component {
         <header>
         </header>
         <div id="main-body" class="column container">
+          <Map_Component></Map_Component>
         </div>
         <footer>
         </footer>
