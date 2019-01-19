@@ -15,12 +15,12 @@ body, #root
 
 header
 {
-  height: 75px;
+  height: $header-height;
   background-color: $main-gray-color;
 }
 
 footer
 {
-  height: 25px;
+  height: $footer-height;
   background: $main-gray-color;
 }
