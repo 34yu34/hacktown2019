@@ -19,6 +19,9 @@ class App extends Component {
         <header>
         </header>
         <div id="main-body" class="column container">
+          <div id="text">
+            Just zoom in where you are on the map and CanUPark™ will help you find availlable parking!
+          </div>
           <Map_Component></Map_Component>
           <Basic_Renderer></Basic_Renderer>
         </div>

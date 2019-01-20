@@ -16,17 +16,8 @@ export class Basic_Renderer extends Component {
   }
 
   render() {
-    if (this.state && this.state.responseText) {
-      return (
-        <div>
-          {this.state.responseText}
-        </div>
-      );
-    }
-    else {
       return(
         <div></div>
       )
-    }
   }
 }
