@@ -23,6 +23,16 @@ get('/signalisation') do
   JSON.parse(Net::HTTP.get(uri))
 end
 
+get('/paneaux/:latitude/:longitude/:radius') do
+  data = 0#TODO somehow, get the data
+  data.select { |key, value| Math.hypot(value.Latitude-params[:latitude], value.Longitude-params[:longitude]) <= params[:radius]/100 }
+end #considering 0.01 degrees is a km, in params, we get in km!
+
+get('/paneaux/:latitude/:longitude') do
+  data = 0#TODO somehow, get the data
+  data.select { |key, value| Math.hypot(value.Latitude-params[:latitude], value.Longitude-params[:longitude]) <=  0.01 }
+end
+
 options "*" do
   response.headers["Allow"] = "GET, POST, OPTIONS"
   response.headers["Access-Control-Allow-Headers"] = "Authorization, Content-Type, Accept, X-User-Email, X-Auth-Token"
