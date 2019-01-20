@@ -30,13 +30,11 @@ class Server < Sinatra::Base
   end
 
   get('/paneaux/:latitude/:longitude/:radius') do
-    data = 0#TODO somehow, get the data
-    data.select { |key, value| Math.hypot(value.Latitude-params[:latitude], value.Longitude-params[:longitude]) <= params[:radius]/100 }
+    @@data.select { |value| Math.hypot((value['Latitude'].to_f - params[:latitude].to_f), (value['Longitude'].to_f - params[:longitude].to_f)) <= params[:radius]/100 }.to_json
   end #considering 0.01 degrees is a km, in params, we get in km!
 
   get('/paneaux/:latitude/:longitude') do
-    data = 0#TODO somehow, get the data
-    data.select { |key, value| Math.hypot(value.Latitude-params[:latitude], value.Longitude-params[:longitude]) <=  0.01 }
+    @@data.select { |value| Math.hypot((value['Latitude'].to_f - params[:latitude].to_f), (value['Longitude'].to_f - params[:longitude].to_f)) <=  0.01 }.to_json
   end
 
   options '*' do
