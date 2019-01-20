@@ -44,30 +44,37 @@ export class Map_Component extends Component {
         {lat: 45.573699, lng: -73.565340, desc: "demo accessible"},
         {lat: 45.574894, lng: -73.568827, desc: "demo accessible"}
       ]
+      this.state.demo_paneau = [
+        {lat: 45.574894, lng: -73.568827, desc: "whatever"}
+      ]
     this.state.polyline_service = undefined
   }
 
   on_load_map(map, maps) {
     this.state.polyline_service = App_Module.set_polyline(new Polyline_Service(map, maps))
-    this.state.map = map
-    this.state.maps = maps
-    for (var i = 0; i < this.state.demo_paths.length; i += 2){
+    for (let i = 0; i < this.state.demo_paths.length; i += 2){
       this.draw_poly_lines(this.state.demo_paths[i],this.state.demo_paths[i + 1]);
+    }
+    debugger
+    let i = 0;
+    while (i < this.state.demo_paneau.length){
+      this.state.polyline_service.add_marker(this.state.demo_paneau[i]);
+      i++
     }
   }
 
   draw_poly_lines(point1, point2){
-    var color = '#FFFFFF';
+    let color = '#FFFFFF';
     if(point1.desc === "demo innaccessible" ) color = '#FF0000';
     else if(point1.desc === "demo accessible") color = '#00FF00';
     else if(point1.desc === "demo semi-innaccessible") color = '#FFFF00';
     else if(point1.desc === "demo semi-semi-innaccessible") color = '#AAFF00';
-    var b = new this.state.maps.Polyline({
+    let b = new this.state.polyline_service.maps.Polyline({
       path: [point1, point2],
       strokeColor: color
     });
 
-    b.setMap(this.state.map);
+    b.setMap(this.state.polyline_service.map);
   }
 
   render() {
@@ -79,8 +86,7 @@ export class Map_Component extends Component {
           defaultZoom={this.state.zoom}
           yesIWantToUseGoogleMapApiInternals
           onGoogleApiLoaded={({ map, maps }) => this.on_load_map(map, maps)}>
-          <div lat={45} lng={-75} text="My Marker"></div>
-        </GoogleMapReact>
+          </GoogleMapReact>
       </div>
     );
   }

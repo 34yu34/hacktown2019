@@ -4,9 +4,10 @@ export class Polyline_Service {
     this.map = map
     this.maps = maps
     this.lines = []
+    this.markers = []
   }
 
-  add_line(pts1, pts2, can_park) {
+  add_line({pts1, pts2, can_park}) {
     let line = new this.maps.Polyline({
       path: [pts1, pts2],
       strokeColor: (can_park ? '#00FF00' : '#FF0000'),
@@ -15,5 +16,15 @@ export class Polyline_Service {
     });
     line.setMap(this.map)
     this.lines.push(line)
+  }
+
+  add_marker({lat, lng, desc}) {
+    let marker = new this.maps.Marker({
+      position: {lat, lng},
+      map: this.map,
+      title: desc,
+      text: 'wow'
+    });
+    this.markers.push(marker);
   }
 }
