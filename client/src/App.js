@@ -21,7 +21,7 @@ class App extends Component {
         <header class="row start-align">
           <img id="header-logo" src={logo} alt="Logo" height="90%" />
         </header>
-        <div id="main-body" class="column container">
+        <div id="main-body" class="column container center-align">
           <h1>Current parkings</h1>
           <div id="text">
             Just zoom in where you are on the map and CanUPark™ will help you find availlable parking!
