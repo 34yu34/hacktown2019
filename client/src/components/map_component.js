@@ -10,8 +10,8 @@ export class Map_Component extends Component {
   constructor(props) {
     super(props)
     this.state = {}
-    this.state.center = { lat: 45, lng: -75 }
-    this.state.zoom = 11
+    this.state.center = { lat: 45.575, lng: -73.57 }
+    this.state.zoom = 16
     this.state.map = undefined
     this.state.maps = undefined
     this.state.demo_paths = [
@@ -46,7 +46,8 @@ export class Map_Component extends Component {
       ]
       this.state.demo_paneau = [
         {lat: 45.574304, lng: -73.567160, desc: "can always park"},
-        {lat: 45.574736, lng: -73.566123, desc: "can't park from 8h00 to 18h00 on the left"}
+        {lat: 45.574736, lng: -73.566123, desc: "can't park from 8h00 to 18h00 on the left, can't park from 21h00 to 6h00 on the right"},
+        {lat: 45.575243, lng: -73.568626, desc: "can't park from 16h00 to 3h00"},
 
       ]
     this.state.polyline_service = undefined
