@@ -1,41 +1,50 @@
-require 'sinatra'
+require 'sinatra/base'
 require 'sinatra/cross_origin'
 require 'json'
 require 'net/http'
+require 'byebug'
 
-set(:port, 3000)
+class Server < Sinatra::Base
+  set(:port, 3000)
 
-configure do
-  enable :cross_origin
+  configure do
+    enable :cross_origin
+    file = File.open("data.json", "r")
+    @@data = JSON.parse(file.read()).map do |key, val|
+      if (key === String)
+        [key, val.gsub(/\\x[A-Fa-f0-9]{2}/){|x| x[0..1] + "00" + x[2..3]}]
+      else
+        [key, val]
+      end
+    end
+    @@data = @@data.to_h
+  end
+
+  before do
+    response.headers['Access-Control-Allow-Origin'] = '*'
+  end
+
+  get('/') do
+    body(@@data.to_h.to_json)
+    status(200)
+  end
+
+  get('/paneaux/:latitude/:longitude/:radius') do
+    data = 0#TODO somehow, get the data
+    data.select { |key, value| Math.hypot(value.Latitude-params[:latitude], value.Longitude-params[:longitude]) <= params[:radius]/100 }
+  end #considering 0.01 degrees is a km, in params, we get in km!
+
+  get('/paneaux/:latitude/:longitude') do
+    data = 0#TODO somehow, get the data
+    data.select { |key, value| Math.hypot(value.Latitude-params[:latitude], value.Longitude-params[:longitude]) <=  0.01 }
+  end
+
+  options '*' do
+    response.headers['Allow'] = 'GET, POST, OPTIONS'
+    response.headers['Access-Control-Allow-Headers'] = 'Authorization, Content-Type, Accept, X-User-Email, X-Auth-Token'
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    return 200
+  end
 end
 
-before do
-  response.headers['Access-Control-Allow-Origin'] = '*'
-end
-
-get('/') do
-  blah = {h: "hello", b: "hello"}
-  return JSON.generate(blah)
-end
-
-get('/signalisation') do
-  uri = URI('http://donnees.ville.montreal.qc.ca/dataset/8ac6dd33-b0d3-4eab-a334-5a6283eb7940/resource/52cecff0-2644-4258-a2d1-0c4b3b116117/download/signalisation.json')
-  JSON.parse(Net::HTTP.get(uri))
-end
-
-get('/paneaux/:latitude/:longitude/:radius') do
-  data = 0#TODO somehow, get the data
-  data.select { |key, value| Math.hypot(value.Latitude-params[:latitude], value.Longitude-params[:longitude]) <= params[:radius]/100 }
-end #considering 0.01 degrees is a km, in params, we get in km!
-
-get('/paneaux/:latitude/:longitude') do
-  data = 0#TODO somehow, get the data
-  data.select { |key, value| Math.hypot(value.Latitude-params[:latitude], value.Longitude-params[:longitude]) <=  0.01 }
-end
-
-options "*" do
-  response.headers["Allow"] = "GET, POST, OPTIONS"
-  response.headers["Access-Control-Allow-Headers"] = "Authorization, Content-Type, Accept, X-User-Email, X-Auth-Token"
-  response.headers["Access-Control-Allow-Origin"] = "*"
-  return (200)
-end
+Server.run!
