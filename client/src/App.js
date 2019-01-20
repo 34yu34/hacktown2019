@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Map_Component } from './components/map_component.js'
 import { App_Module } from './App_Module.js'
 import { Basic_Renderer } from './components/basic_renderer.js'
+
+import logo from './logo.png'
 import './App.scss';
 
 class App extends Component {
@@ -16,16 +18,19 @@ class App extends Component {
   render() {
     return (
       <div class="column container">
-        <header>
+        <header class="row start-align">
+          <img id="header-logo" src={logo} alt="Logo" height="90%" />
         </header>
         <div id="main-body" class="column container">
+          <h1>Current parkings</h1>
           <div id="text">
             Just zoom in where you are on the map and CanUPark™ will help you find availlable parking!
           </div>
           <Map_Component></Map_Component>
           <Basic_Renderer></Basic_Renderer>
         </div>
-        <footer>
+        <footer class="row end-align">
+          <div id="footer-name">NullNameException</div>
         </footer>
       </div>
     );

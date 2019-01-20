@@ -14,3 +14,21 @@
 {
   flex-grow: 1;
 }
+
+.center-align
+{
+  justify-content: space-around;
+  align-items: center;
+}
+
+.end-align
+{
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.start-align
+{
+  justify-content: flex-start;
+  align-items: center;
+}
